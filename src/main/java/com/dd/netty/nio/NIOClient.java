@@ -6,7 +6,11 @@ import java.nio.channels.SocketChannel;
 
 public class NIOClient {
     public static void main(String[] args) throws Exception {
-
+        /**
+         * 此处创建的socketChannel是为了与服务端进行连接并通信 作为客户端使用
+         * 而服务端的serverSocketChannel通过accept创建的socketChannel是为了与客户端进行通信 作用在服务端
+         * 两边的socketChannel不是同一个对象 拥有不同的作用
+         */
         SocketChannel socketChannel = SocketChannel.open();
         //将通道设置为非阻塞
         socketChannel.configureBlocking(false);
