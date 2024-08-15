@@ -6,6 +6,8 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.util.CharsetUtil;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * 说明
  * 1.我们自定义一个Handler 需要继承netty 规定好的某个HandlerAdapter（规范）
@@ -52,6 +54,22 @@ public class NettyServerHandler extends ChannelInboundHandlerAdapter {
                 }
             }
         });
+
+        //解决方案2 用户自定义的定时任务
+        /**
+         * 这个任务是存放在 NioEventLoop 的 scheduledTaskQueue中
+         */
+        ctx.channel().eventLoop().schedule(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(20 * 1000);
+                    ctx.writeAndFlush(Unpooled.copiedBuffer("hello,客户端~o(=•ェ•=)m444", CharsetUtil.UTF_8));
+                } catch (InterruptedException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        }, 5, TimeUnit.SECONDS);
 
         System.out.println("go on ........");
 
