@@ -28,7 +28,7 @@ public class GroupChatServerHandler extends SimpleChannelInboundHandler<String> 
          * 该方法会将channelGroup中所有的channel遍历 并发送消息
          * 我们不需要自己遍历
          */
-        channelGroup.writeAndFlush("[客户端]" + channel.remoteAddress() + " 加入聊天\n");
+        channelGroup.writeAndFlush("[客户端]" + channel.remoteAddress() + " 加入聊天, 时间是：" + sdf.format(new Date()) +"\n");
         channelGroup.add(channel);
     }
 
@@ -38,7 +38,7 @@ public class GroupChatServerHandler extends SimpleChannelInboundHandler<String> 
     @Override
     public void handlerRemoved(ChannelHandlerContext ctx) throws Exception {
         Channel channel = ctx.channel();
-        channelGroup.writeAndFlush("[客户端]" + channel.remoteAddress() + " 离开了\n");
+        channelGroup.writeAndFlush("[客户端]" + channel.remoteAddress() + " 离开了 时间是：" + sdf.format(new Date()) +"\n");
         //handlerRemoved一旦被触发 当前的channel会自动被移除出channelGroup分组 无需手动调用remove方法
         System.out.println("channelGroup size = " + channelGroup.size());
     }

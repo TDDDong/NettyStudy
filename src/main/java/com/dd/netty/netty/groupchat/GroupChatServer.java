@@ -35,9 +35,9 @@ public class GroupChatServer {
                             //获取到pipeline
                             ChannelPipeline pipeline = socketChannel.pipeline();
                             //向pipeline中加入解码器
-                            pipeline.addLast("", new StringDecoder());
+                            pipeline.addLast("MyDecoder", new StringDecoder());
                             //向pipeline中加入编码器
-                            pipeline.addLast("", new StringEncoder());
+                            pipeline.addLast("MyEncoder", new StringEncoder());
                             //加入自己的业务处理handler
                             pipeline.addLast(new GroupChatServerHandler());
                         }
