@@ -12,6 +12,8 @@ import java.util.List;
  */
 public class MyByteToLongDecoder extends ByteToMessageDecoder {
     /**
+     * decode 会根据接收的数据 被调用多次 直到确定没有新的元素被添加list， 或者是ByteBuf 没有更多的可读字节为止
+     * 如果list out 不为空， 就会将list的内容传递给下一个channelinboundhandler处理
      *
      * @param channelHandlerContext 上下文对象
      * @param byteBuf               入站的ByteBuf
